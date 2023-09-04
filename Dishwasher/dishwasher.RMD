@@ -1,0 +1,55 @@
+---
+title: "Dishwasher Problem"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+#### Sampling space is the 5 dishwashers. The event of atleast 4 dishes out of getting broken by the same dishwasher is equally likely.
+
+```{r}
+s=c('d1','d2','d3','d4','d5')
+p=replicate(5,1/5)
+S=sample(s,5,replace=TRUE,prob=p)
+print(S)
+```
+
+#### Replicating the simulations for 100000 iterations
+
+```{r}
+simTrial=function(){
+ S=sample(s,5,replace=TRUE,prob=p)
+  return(S)
+}
+nsimulations=100000
+simulatedData=replicate(nsimulations,simTrial())
+#print(simulatedData)
+```
+
+```{r}
+print(simulatedData)
+```
+
+#### Consider d1 is the dishwasher breaking atleast 4 out 5 dishes. So we need to check the fraction of d1 appearing 4 or more than 4 times.
+
+```{r}
+checkEvent=function(data){
+  if(sum(data=='d1')>=4)
+    return(1)
+  else
+    return(0)
+}
+```
+
+```{r}
+print(mean(apply(simulatedData,2,checkEvent)))
+```
+
+#### Based on the probability value, the probability of one dishwasher breaking atleast 4 out of 5 is relatively low. So the hypotheses of the particular dishwasher being "not clumsy" is wrong.
+
+```{r}
+(choose(5,4)*choose(4,1)+1)/(5^5)
+```

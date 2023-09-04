@@ -1,0 +1,47 @@
+---
+title: "Coin Toss Problem - The probabilty of getting 3 heads in 10 coins tosses"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+#### Sampling space is the available outcome for one coin tossing. Events are equally likely.
+
+```{r}
+s=c("H","T")
+p=c(0.5,0.5)
+S=sample(s,10,replace=TRUE,prob=p)
+S
+```
+```{r}
+coinToss=function(){
+  return(sample(s,10,replace=TRUE,prob=p))
+}
+```
+
+```{r}
+nsimulations=100000
+simulatedData=replicate(nsimulations,coinToss())
+#simulatedData
+```
+#### Checking for 10 coins tossing how many time we could get 3 heads
+```{r}
+checkEvent=function(data){
+  if(sum(data=='H')==3){
+    return(1)
+  }
+else
+  return(0)
+}
+```
+#### Taking the fraction of times 3 heads found for 10 coins tosses
+```{r}
+mean(apply(simulatedData,2, checkEvent))
+```
+```{r}
+choose(10,3)/(2^10)
+```
+
