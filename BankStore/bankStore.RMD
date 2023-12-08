@@ -1,0 +1,54 @@
+---
+title: "Bank Store Problem"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r}
+s=c(0,1)
+p=c(0.5,0.5)
+S=sample(s,17,replace=TRUE,prob=p)
+S
+```
+
+```{r}
+simTrail=function(){
+  return(sample(s,17,replace=TRUE,prob=p))
+}
+```
+
+```{r}
+nsimulations=100000
+simulatedData=replicate(nsimulations,simTrail())
+```
+
+```{r}
+#simulatedData
+```
+
+```{r}
+checkEvent=function(data){
+  if(sum(data)==10){
+    return(1)
+  }
+  else{
+    return(0)
+  }
+}
+```
+
+```{r}
+mean(apply(simulatedData,2,checkEvent))
+```
+
+```{r}
+choose(17,10)/(2^17)
+```
+
+
+
+
+

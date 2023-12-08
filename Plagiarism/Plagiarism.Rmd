@@ -1,0 +1,43 @@
+---
+title: "plagiarismDetection"
+output: html_document
+date: "2023-11-20"
+---
+
+```{r}
+personA=read.table('Data/personKeyTimingA.txt',header=FALSE, sep=',')
+personA
+```
+```{r}
+personB=read.table('Data/personKeyTimingB.txt',header=FALSE, sep=',')
+personB
+```
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+```{r}
+p=ggplot() +
+  geom_density(aes(x = personA$V1, color="User A"), fill = "blue") +
+  geom_density(aes(x = personB$V1), fill = "green") +
+  labs(title = "Density Histograms for user A and B",
+       x = "Keystroke Time (milliseconds)",
+       y = "Density")
+p
+
+```
+
+```{r}
+unknown=read.table('Data/email.txt',header=FALSE, sep=',')
+unknown
+```
+
+```{r}
+p=ggplot() +
+  geom_density(aes(x = unknown$V1), fill = "red") +
+  labs(title = "Density Histograms for unknown user",
+       x = "Keystroke Time (milliseconds)",
+       y = "Density")
+p
+```
+

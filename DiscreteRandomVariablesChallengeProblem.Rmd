@@ -1,0 +1,58 @@
+---
+title: "challenge_problems"
+output:
+  html_document:
+    df_print: paged
+date: "2023-10-11"
+---
+
+##### A company sells LED bulbs in packages of 20 for 25$. From past records it knows that a bulb will be defective with probability 0.01. The comapany gives full refund if a customer finds more than 1 defective bulb in a pack. If company sells 100 packs how much should it expect to refund?
+```{r}
+#Binomial random variable
+n=20
+p=0.01
+#Probability of getting more than 1 defective bulb in a package = P(X>=2) or 1-P(X<2)
+p_new=1-pbinom(1,n,p)
+p_new
+```
+```{r}
+n=100#Total number of packages
+p=p_new#Probability of getting defective package=p_new
+#Expected value=n*p
+#Expected refund=25*n*p
+25*n*p
+
+```
+
+
+##### During assembly a product is equipped with 5 control switches each of which has probability of 0.04 being defective. What is the probability that 2 defective switches encountered before 5 non defective?
+```{r}
+#Negative Binomial random variable
+p=0.04#Probability of getting a defective switch
+r=2
+#It would take total 7 trials to find 2 defective switches before 5 non-defective switches.
+j=7
+dnbinom(j-r,r,p)
+
+```
+#### Suppose that class of 50 students appear for a test and 41 out of 50 passed the test while the remaining 9 students have failed the test. Find the probability that in a group of 10 students selected at random none of them have failed the test and atleast 3 students have failed the test
+```{r}
+#Hyper geometry 
+nsuccess=9
+nfailures=41
+n=10
+#None have failed the test = P(X=0)
+dhyper(0,nsuccess,nfailures,n)
+#At least 3 students have failed the test = P(X>=3) or 1-P(X<3)
+#dhyper(3,nsuccess,nfailures,n)+dhyper(4,nsuccess,nfailures,n)+dhyper(5,nsuccess,nfailures,n)+dhyper(6,nsuccess,nfailures,n)+dhyper(7,nsucce#ss,nfailures,n)+dhyper(8,nsuccess,nfailures,n)+dhyper(9,nsuccess,nfailures,n)+dhyper(10,nsuccess,nfailures,n)
+1-sum(dhyper(c(0:2),nsuccess,nfailures,n))
+```
+```{r}
+#Poisson random variable
+n=1e6
+p=1e-6
+j=5
+dbinom(j,n,p)
+dpois(5,1)
+```
+
